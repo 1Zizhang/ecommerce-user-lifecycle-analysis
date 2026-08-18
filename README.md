@@ -10,9 +10,9 @@ ecommerce-user-consumption-analysis/
 ├── notebooks/          # 探索性分析 (EDA) 与可视化验证
 ├── src/                # 核心业务逻辑模块
 │   ├── data_loader.py      # 数据加载与解析
-│   ├── preprocessor.py     # 数据清洗与异常值处理
+│   ├── data_processor.py     # 数据清洗与异常值处理
 │   ├── analyzer.py         # RFM 模型与特征工程
-│   └── visualizer.py       # 报表生成与图表输出
+│   └── data_visualizer.py       # 报表生成与图表输出
 ├── main.py             # 项目统一入口
 ├── requirements.txt    # 环境依赖清单
 └── README.md           # 项目说明文档
@@ -50,5 +50,11 @@ python main.py
 - 用户购买数量均值 2.4 且标准差 2.3，有较小偏移但正常（波动较小）
 - 50%分位在 2 但75分位数在 3，说明绝大多数订单购买量是不多的，最大数量为99，说明有大客户
 - 用户购买金额中通过分位数可以看出大部分订单集中在 30 - 40 之间
+
+---
+
+### 3.3.用户整体消费趋势分析（按照月份）
+
+- 
 
 ## 4.🛠️ 技术细节
