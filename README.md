@@ -51,6 +51,6 @@ python main.py
 - 50%分位在 2 但75分位数在 3，说明绝大多数订单购买量是不多的，最大数量为99，说明有大客户
 - 用户购买金额中通过分位数可以看出大部分订单集中在 30 - 40 之间
 
-![八大特征描述图](G:\C-CodeBases\ecommerce-user-lifecycle-analysis\images\describe_image.png)
+![feature_describe](./images/feature_describe.png)
 
 ## 4.🛠️ 技术细节
