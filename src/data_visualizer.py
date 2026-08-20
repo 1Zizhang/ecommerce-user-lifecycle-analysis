@@ -49,3 +49,17 @@ def plot_monthly_sales(df):
     plt.tight_layout()
     plt.show()
     plt.close()
+
+
+def plot_order_products_amount_scatter(df):
+    """
+    用户购买数量与订单金额散点图
+    :param df:DataFrame
+    :return:无
+    """
+    df.plot(kind='scatter', x='order_products', y='order_amount', figsize=(14, 10))
+    plt.xlabel("下单商品数量")
+    plt.ylabel("订单金额")
+    plt.title("商品数量‑订单金额散点图")
+    plt.grid(True)
+    plt.show()
