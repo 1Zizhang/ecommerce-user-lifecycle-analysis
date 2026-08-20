@@ -1,4 +1,5 @@
-from src.data_visualizer import init_plot_style, plot_monthly_sales
+from src.data_visualizer import init_plot_style, plot_monthly_sales, plot_order_products_amount_scatter, \
+    plot_customer_amount_hist
 from src.data_loader import load_ecommerce_data
 from src.data_processor import preprocess_data
 
@@ -14,6 +15,8 @@ def main():
     df = preprocess_data(raw_df)
     # 4.画图
     plot_monthly_sales(df)
+    plot_order_products_amount_scatter(df)
+    plot_customer_amount_hist(df)
 
 
 if __name__ == '__main__':
