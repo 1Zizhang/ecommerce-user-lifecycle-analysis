@@ -63,3 +63,36 @@ def plot_order_products_amount_scatter(df):
     plt.title("商品数量‑订单金额散点图")
     plt.grid(True)
     plt.show()
+    plt.close()
+
+
+def plot_customer_amount_hist(df):
+    """
+    用户消费分布图
+    :param df: DataFrame
+    :return: 无
+    """
+    # 定义画布
+    fig, axes = plt.subplots(2, 3, figsize=(14, 10))
+    ax = axes[0, 0]
+    df['order_amount'].plot(kind='hist', ax=ax, bins=50)
+    ax.set_xlabel('用户消费金额')
+    ax.set_ylabel('用户人数')
+    ax.set_title('用户消费金额 - 人数直方图')
+    ax = axes[0, 1]
+    df.groupby(by=['user_id'])['order_products'].sum().plot(kind='hist', ax=ax, bins=50)
+    ax.set_xlabel('用户购买数量')
+    ax.set_ylabel('产品总金额')
+    ax.set_title('用户购买数量 - 产品金额直方图')
+    ax = axes[0, 2]
+    user_cum_sum = df.groupby(by=['user_id'])['order_amount'].sum().sort_values(ascending=True).reset_index()
+    user_cum_sum['amount_cum_sum'] = user_cum_sum['order_amount'].cumsum()
+    amount_total = user_cum_sum['amount_cum_sum'].max()
+    user_cum_sum['prop'] = user_cum_sum.apply(lambda x: x['amount_cum_sum'] / amount_total, axis=1)
+    user_cum_sum['prop'].plot(ax=ax)
+    ax.set_xlabel('用户量')
+    ax.set_ylabel('消费占比')
+    ax.set_title('用户消费金额占比分析 - ')
+    plt.tight_layout()
+    plt.show()
+    plt.close()
