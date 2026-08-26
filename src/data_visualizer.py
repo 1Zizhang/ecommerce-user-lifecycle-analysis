@@ -74,25 +74,45 @@ def plot_customer_amount_hist(df):
     """
     # 定义画布
     fig, axes = plt.subplots(2, 3, figsize=(14, 10))
+    # 图1
     ax = axes[0, 0]
     df['order_amount'].plot(kind='hist', ax=ax, bins=50)
-    ax.set_xlabel('用户消费金额')
+    ax.set_xlabel('用户累计购买数量')
     ax.set_ylabel('用户人数')
     ax.set_title('用户消费金额 - 人数直方图')
+    # 图2
     ax = axes[0, 1]
     df.groupby(by=['user_id'])['order_products'].sum().plot(kind='hist', ax=ax, bins=50)
     ax.set_xlabel('用户购买数量')
     ax.set_ylabel('产品总金额')
     ax.set_title('用户购买数量 - 产品金额直方图')
+    # 图3
     ax = axes[0, 2]
     user_cum_sum = df.groupby(by=['user_id'])['order_amount'].sum().sort_values(ascending=True).reset_index()
     user_cum_sum['amount_cum_sum'] = user_cum_sum['order_amount'].cumsum()
     amount_total = user_cum_sum['amount_cum_sum'].max()
     user_cum_sum['prop'] = user_cum_sum.apply(lambda x: x['amount_cum_sum'] / amount_total, axis=1)
     user_cum_sum['prop'].plot(ax=ax)
-    ax.set_xlabel('用户量')
-    ax.set_ylabel('消费占比')
+    ax.set_xlabel('用户购买数量')
+    ax.set_ylabel('产品总金额')
     ax.set_title('用户消费金额占比分析 - ')
+    ax = axes[1, 0]
+    # 图4用户首购时间
+    first_series = df.groupby(by='user_id')['order_date'].min()
+    daily_new_user = first_series.value_counts().sort_index()
+    daily_new_user.plot(ax=ax)
+    ax.set_xlabel('日期')
+    ax.set_ylabel('购买人数')
+    ax.set_title('用户首购量增长分析 - 折线图')
+    # 图5用户首购时间
+    ax = axes[1, 1]
+    last_series = df.groupby(by='user_id')['order_date'].max()
+    daily_old_user = last_series.value_counts().sort_index()
+    daily_old_user.plot(ax=ax)
+    ax.set_xlabel('日期')
+    ax.set_ylabel('购买人数')
+    ax.set_title('用户最后购买增长分析 - 折线图')
+    plt.setp(ax.get_xticklabels(), rotation=45, ha='right')
     plt.tight_layout()
     plt.show()
     plt.close()
