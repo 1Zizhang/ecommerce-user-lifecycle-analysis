@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def init_plot_style(style_name: str = 'ggplot'):
@@ -116,3 +117,20 @@ def plot_customer_amount_hist(df):
     plt.tight_layout()
     plt.show()
     plt.close()
+
+
+def rfm_user_segmentation(df):
+    """
+    用户分层RFM分析
+    :param df: DataFrame
+    :return: 无
+    """
+    rfm = df.pivot_table(index='user_id',
+                         values=['order_products', 'order_amount', 'order_date'],
+                         aggfunc={
+                             'order_products': 'sum',  # 购买产品的总数量
+                             'order_date': 'max',  # 最后一次购买时间
+                             'order_amount': 'sum',  # 消费总金额
+                         })
+    rfm['R'] = -(rfm['order_date'] - rfm['order_date'].max()) / np.timedelta64(1, 'D')  # 取相差的天数保留一位小数
+    rfm.rename(columns={'order_products': 'F', 'order_amount': 'M'}, inplace=True)
